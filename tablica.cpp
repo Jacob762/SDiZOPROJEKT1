@@ -55,7 +55,7 @@ namespace std {
                     usunZKonca();
                     break;
                 case 3:
-                    delete [] table;
+                    delete [] table; //wypierdala sie w chuj
                     exit(2137);
             }
         }
