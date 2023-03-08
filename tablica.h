@@ -22,8 +22,8 @@ namespace std {
         void usunZPoczatku();
         void usunZKonca();
         void usunZDowolnegoMiejsca(int index);
-        int wyszukaj(int index);
         void pokaz();
+        void relocate();
     };
 
 } // std

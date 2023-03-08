@@ -3,4 +3,4 @@ project(SDiZO)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(SDiZO main.cpp tablica.cpp tablica.h)
+add_executable(SDiZO main.cpp tablica.cpp tablica.h tablicaTesty.cpp tablicaTesty.h listaElement.cpp listaElement.h lista.cpp lista.h)
