@@ -72,7 +72,7 @@ namespace std {
                     cin.sync(); cin.clear();
                     cout<<"Podaj indeks"<<endl;
                     cin>>n;
-                    table[n];
+                    cout<<table[n]<<endl;
                     break;
                 case 3:
                     delete [] table;
@@ -86,9 +86,7 @@ namespace std {
     }
     void tablica::dodajNaKoniec(int liczba) {
         temp = new int[++rozmiar];
-        for(int i=0;i<rozmiar-1;i++){
-            temp[i] = table[i];
-        }
+        for(int i=0;i<rozmiar-1;i++) temp[i] = table[i];
         temp[rozmiar-1] = liczba;
         relocate();
     }

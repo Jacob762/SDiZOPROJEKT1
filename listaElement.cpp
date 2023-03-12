@@ -3,9 +3,12 @@
 //
 
 #include "listaElement.h"
+#include <iostream>
 
 using namespace std;
 
-void listaElement::init(int rozmiar) {
-
+listaElement::listaElement(int liczba) {
+    nextEl = NULL;
+    prevEl = NULL;
+    data = liczba;
 }

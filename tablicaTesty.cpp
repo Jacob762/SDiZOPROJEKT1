@@ -16,13 +16,13 @@ void tablicaTesty::init(){
 
 void tablicaTesty::test(){
     init();
-    for(int i=0;i<5;i++){
+    for(int i=0;i<50;i++){
         tablicaTest.dodajNaPoczatek(rand()%100+1);
         tablicaTest.dodajNaKoniec(rand()%100+1);
         tablicaTest.dodajNaDowolneMiejsce(rand()%100+1, rand()%tablicaTest.rozmiar+1);
     }
     tablicaTest.pokaz();
-    for(int i=0;i<5;i++){
+    for(int i=0;i<50;i++){
         tablicaTest.usunZKonca();
         tablicaTest.usunZPoczatku();
         tablicaTest.usunZDowolnegoMiejsca(rand()%tablicaTest.rozmiar+1);

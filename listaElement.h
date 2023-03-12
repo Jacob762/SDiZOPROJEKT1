@@ -9,18 +9,10 @@
 class listaElement {
 public:
     int data;
+   // int key;
     listaElement * prevEl;
     listaElement * nextEl;
-    void init(int rozmiar);
-    void menu();
-    void dodajNaPoczatek(int liczba);
-    void dodajNaKoniec(int liczba);
-    void dodajNaDowolneMiejsce(int liczba, int index);
-    void usunZPoczatku();
-    void usunZKonca();
-    void usunZDowolnegoMiejsca(int index);
-    void pokaz();
-    void relocate();
+    listaElement(int liczba);
 };
 
 
