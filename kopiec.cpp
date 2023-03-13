@@ -20,7 +20,7 @@ using namespace std;
         cr [ 0 ] = 218; cr [ 1 ] = 196;
         cl [ 0 ] = 192; cl [ 1 ] = 196;
         cp [ 0 ] = 179;
-        if( v < wezly )
+        if( v < rozmiar )
         {
             s = sp;
             if( sn == cr ) s [ s.length( ) - 2 ] = ' ';
@@ -40,7 +40,7 @@ using namespace std;
         temp = new int[++rozmiar];
         for(int i=0;i<rozmiar-1;i++) temp[i] = table[i];
         temp[rozmiar-1] = liczba;
-        wezly++;
+        //wezly++;
         relocate();
         sort();
     }
@@ -51,21 +51,16 @@ using namespace std;
         cout<<table[0]<<" PRZENOSZONY"<<endl;
         temp = new int[--rozmiar];
         for(int i=0;i<rozmiar;i++) temp[i] = table[i];
-        wezly--;
+       // wezly--;
         relocate();
         int i=0;
-        while(true){ // tu chyba bug?
-            if(i>=rozmiar||2*i+1>=rozmiar||2*i+2>=rozmiar) break;
-            else if(table[i]<table[2*i+1] && table[2*i+1]>table[2*i+2] ) {
-                cout<<table[2 * i + 1]<<" POR 2i+1"<<endl;
-                swap(table[i], table[2 * i + 1]);
-                i=2*i+1;
-            }else if(table[i]<table[2*i+2] && table[2*i+2]>table[2*i+1] ){
-                cout<<table[2 * i + 2]<<" POR 2i+2"<<endl;
-                swap(table[i], table[2 * i + 2]);
-
-                i=2*i+2;
-            }else break;
+        int j=1;
+        while(j < rozmiar){ // tu chyba bug?, kod z neta dziala
+            if(j+1 < rozmiar && table[j+1] > table[j]) j++;
+            if(table[i] >= table[j]) break;
+            swap(table[i],table[j]);
+            i = j;
+            j = 2*j+1;
         }
     }
 
