@@ -83,9 +83,19 @@ int main() {
     for(int k=0;k<kopie1c.rozmiar;k++) cout<<kopie1c.table[k]<< " ";
     cout<<endl;
     kopie1c.pokaz("", "", 0);*/
-    srand(time(NULL));
-    kopiec kopie1c(5);
-    for (int i = 0; i < 5; i++) {
+    //srand(time(NULL));
+    kopiec kopie1c(17);
+    int tab[] = {670, 319, 615,269, 310, 330, 599, 237, 194, 248 ,213 ,268 ,309 ,396 ,249 ,234 ,188, 177 ,166, 223 ,166 ,131 ,136 ,149, 249 ,159 ,276 ,293, 230, 240
+    ,31 ,161 ,18 ,80 ,152 ,147, 128 ,38,7 ,174, 204 ,21 ,11 ,22, 8, 9 ,68, 58, 114, 229, 8 ,210 ,72 ,74 ,220, 252, 264 ,185 ,32 ,17
+    };
+    for(int i=0;i<60;i++) kopie1c.dodaj(tab[i]);
+    //kopie1c.pokaz("","",0);
+    //kopie1c.usunKorzen();
+    //kopie1c.usunKorzen();
+    //kopie1c.pokaz("","",0);
+    if(kopie1c.rozmiar!=0) for(int k=0;k<kopie1c.rozmiar;k++) kopie1c.usunKorzen();
+
+    for (int i = 0; i < 1; i++) {
         for (int j = 0; j < 1000; j++) {
             switch (rand() % 2 + 1) {
                 case 1:

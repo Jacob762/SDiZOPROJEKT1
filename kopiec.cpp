@@ -48,17 +48,22 @@ using namespace std;
     void kopiec::usunKorzen() { // w tej funkcji bug
         if(rozmiar==0) return;
         swap(table[0],table[rozmiar-1]);
+        cout<<table[0]<<" PRZENOSZONY"<<endl;
         temp = new int[--rozmiar];
         for(int i=0;i<rozmiar;i++) temp[i] = table[i];
         wezly--;
         relocate();
         int i=0;
         while(true){ // tu chyba bug?
-            if(table[i]<table[2*i+1] && table[2*i+1]>table[2*i+2] && i<rozmiar && 2*i+1<rozmiar) {
+            if(i>=rozmiar||2*i+1>=rozmiar||2*i+2>=rozmiar) break;
+            else if(table[i]<table[2*i+1] && table[2*i+1]>table[2*i+2] ) {
+                cout<<table[2 * i + 1]<<" POR 2i+1"<<endl;
                 swap(table[i], table[2 * i + 1]);
                 i=2*i+1;
-            }else if(table[i]<table[2*i+2] && table[2*i+2]>table[2*i+1] && i<rozmiar && 2*i+2<rozmiar){
+            }else if(table[i]<table[2*i+2] && table[2*i+2]>table[2*i+1] ){
+                cout<<table[2 * i + 2]<<" POR 2i+2"<<endl;
                 swap(table[i], table[2 * i + 2]);
+
                 i=2*i+2;
             }else break;
         }
