@@ -7,18 +7,21 @@
 #include <string>
 
 class kopiec {
+private:
+    bool start = true;
 public:
     kopiec();
     int * temp;
     int rozmiar = 0;
     int* table;
-    int wezly;
     kopiec(int liczba);
     void dodaj(int liczba);
     void usunKorzen();
     void pokaz(std::string sp, std::string sn, int v);
     void relocate();
     void sort();
+    bool isCorrect();
+    void test(int iloscTestow, int wielkoscZestawu,int iloscOperacji);
 };
 
 
