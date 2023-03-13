@@ -2,10 +2,20 @@
 #include "tablica.h"
 #include "lista.h"
 #include "kopiec.h"
+#include "RBTree.h"
 
 using namespace std;
 
 int main() {
+    RBTree* rbt;
+    rbt = new RBTree;
+    rbt->dodaj(5);
+    rbt->dodaj(15);
+    rbt->dodaj(12);
+    rbt->dodaj(3);
+    rbt->dodaj(4);
+    rbt->dodaj(2);
+    rbt->printRBT("","",rbt->root);
     //tablica mytablica;
     //mytablica.menu();
     //lista list;
@@ -84,8 +94,8 @@ int main() {
     cout<<endl;
     kopie1c.pokaz("", "", 0);*/
    // srand(time(NULL));
-    kopiec kopie1c(4);
-    kopie1c.test(15,5000,1000);
+    //kopiec kopie1c(4);
+    //kopie1c.test(15,5000,1000);
     /*int tab[] = {670, 319, 615,269, 310, 330, 599, 237, 194, 248 ,213 ,268 ,309 ,396 ,249 ,234 ,188, 177 ,166, 223 ,166 ,131 ,136 ,149, 249 ,159 ,276 ,293, 230, 240
     ,31 ,161 ,18 ,80 ,152 ,147, 128 ,38,7 ,174, 204 ,21 ,11 ,22, 8, 9 ,68, 58, 114, 229, 8 ,210 ,72 ,74 ,220, 252, 264 ,185 ,32 ,17
     };
