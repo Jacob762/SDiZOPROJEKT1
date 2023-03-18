@@ -6,6 +6,7 @@
 #define SDIZO_RBTREE_H
 #include <string>
 
+
 class RBTree {
 public:
     struct RBTNode{
@@ -21,7 +22,13 @@ public:
     RBTree();
     void dodaj(int liczba);
 
-    void printRBT(std::__cxx11::basic_string<char> sp, std::__cxx11::basic_string<char> sn, RBTNode *p);
+   // void printRBT(std::__cxx11::basic_string<char> sp, std::__cxx11::basic_string<char> sn, RBTNode *p);
+
+    void printRBT(std::string sp, std::string sn, RBTNode *p);
+
+    void rotacjaWLewo(RBTNode *node);
+
+    void rotacjaWPrawo(RBTNode *node);
 };
 
 

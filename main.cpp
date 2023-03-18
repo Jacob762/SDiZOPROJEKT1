@@ -1,21 +1,37 @@
 #include <iostream>
-#include "tablica.h"
-#include "lista.h"
-#include "kopiec.h"
-#include "RBTree.h"
+#include "Struktury/Tablica/tablica.h"
+#include "Struktury/Lista/lista.h"
+#include "Struktury/Kopiec/kopiec.h"
+#include "Struktury/BRTree/RBTree.h"
 
 using namespace std;
 
 int main() {
     RBTree* rbt;
+    RBTree::RBTNode* node;
     rbt = new RBTree;
+    rbt->dodaj(6);
+    //rbt->dodaj(15);
     rbt->dodaj(5);
-    rbt->dodaj(15);
-    rbt->dodaj(12);
     rbt->dodaj(3);
-    rbt->dodaj(4);
-    rbt->dodaj(2);
-    rbt->printRBT("","",rbt->root);
+    node = rbt->root;
+        cout<<node->data<<" WARTOSC"<<endl;
+        cout<<node->up->data<<" OJCIEC"<<endl;
+        cout<<node->left->data<<" LEWY SYN"<<endl;
+        cout<<node->right->data<<" prawy SYN"<<endl;
+        cout<<node->right->left->data<<endl;
+    //rbt->dodaj(3);
+    //rbt->dodaj(4);
+    node = rbt->root;
+    cout<<node->data<<" WARTOSC"<<endl;
+    cout<<node->up->data<<" OJCIEC"<<endl;
+    cout<<node->left->data<<" LEWY SYN"<<endl;
+    cout<<node->right->data<<" prawy SYN"<<endl;
+    cout<<node->right->left->data<<endl;
+    cout<<node->left->data<<endl;
+    cout<<node->left->right->data<<endl;
+    cout<<node->left->left->data<<endl;
+    //rbt->printRBT("","",rbt->root);
     //tablica mytablica;
     //mytablica.menu();
     //lista list;

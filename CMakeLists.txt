@@ -3,4 +3,4 @@ project(SDiZO)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(SDiZO main.cpp tablica.cpp tablica.h tablicaTesty.cpp tablicaTesty.h listaElement.cpp listaElement.h lista.cpp lista.h kopiec.cpp kopiec.h RBTree.cpp RBTree.h)
+add_executable(SDiZO main.cpp Struktury/Tablica/tablica.cpp Struktury/Tablica/tablica.h Struktury/Tablica/tablicaTesty.cpp Struktury/Tablica/tablicaTesty.h Struktury/Lista/listaElement.cpp Struktury/Lista/listaElement.h Struktury/Lista/lista.cpp Struktury/Lista/lista.h Struktury/Kopiec/kopiec.cpp Struktury/Kopiec/kopiec.h Struktury/BRTree/RBTree.cpp Struktury/BRTree/RBTree.h)
