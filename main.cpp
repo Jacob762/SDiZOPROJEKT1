@@ -3,34 +3,45 @@
 #include "Struktury/Lista/lista.h"
 #include "Struktury/Kopiec/kopiec.h"
 #include "Struktury/BRTree/RBTree.h"
+#include "Struktury/Tablica/tablicaTesty.h"
+#include "Struktury/Lista/listaTesty.h"
+#include "Struktury/Kopiec/kopiecTesty.h"
 
 using namespace std;
 
 int main() {
-    RBTree* rbt;
-    RBTree::RBTNode* node;
-    rbt = new RBTree;
-    rbt->dodaj(6);
-    //rbt->dodaj(15);
-    rbt->dodaj(5);
-    rbt->dodaj(3);
-    node = rbt->root;
-        cout<<node->data<<" WARTOSC"<<endl;
-        cout<<node->up->data<<" OJCIEC"<<endl;
-        cout<<node->left->data<<" LEWY SYN"<<endl;
-        cout<<node->right->data<<" prawy SYN"<<endl;
-        cout<<node->right->left->data<<endl;
-    //rbt->dodaj(3);
-    //rbt->dodaj(4);
-    node = rbt->root;
-    cout<<node->data<<" WARTOSC"<<endl;
-    cout<<node->up->data<<" OJCIEC"<<endl;
-    cout<<node->left->data<<" LEWY SYN"<<endl;
-    cout<<node->right->data<<" prawy SYN"<<endl;
-    cout<<node->right->left->data<<endl;
-    cout<<node->left->data<<endl;
-    cout<<node->left->right->data<<endl;
-    cout<<node->left->left->data<<endl;
+    tablica tab = tablica();
+    lista list = lista();
+    kopiec kopiec1 = kopiec();
+    for(;;){
+        cout<<"Wybierz strukture"<<endl;
+        cout<<"1. tablica dynamiczna"<<endl;
+        cout<<"2. lista dwukierunkowa"<<endl;
+        cout<<"3. kopiec"<<endl;
+        cout<<"4. Wyjdz"<<endl;
+        int n;
+        cin>>n;
+        switch (n) {
+            case 1:
+                tab.menu();
+                break;
+            case 2:
+                list.menu();
+                break;
+            case 3:
+                kopiec1.menu();
+                break;
+            case 4:
+                exit(2138);
+        }
+    }
+    //tablicaTesty testy = tablicaTesty(20000,100,10);
+    //listaTesty testy1 = listaTesty(20000,100,10);
+    //kopiecTesty testy2 = kopiecTesty(20000,100,10);
+    // lista list;
+    //list = lista();
+    //   list.test();
+    //tab.usunZKonca();
     //rbt->printRBT("","",rbt->root);
     //tablica mytablica;
     //mytablica.menu();

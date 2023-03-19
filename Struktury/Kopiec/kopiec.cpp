@@ -6,11 +6,12 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <fstream>
 
 using namespace std;
 
-    kopiec::kopiec(int liczba){
-        dodaj(liczba);
+    kopiec::kopiec(){
+        table = new int[rozmiar];
         start = false;
     }
 
@@ -111,3 +112,82 @@ using namespace std;
             if(rozmiar!=0) for(int k=0;k<rozmiar;k++) usunKorzen();
         }
     }
+
+    void kopiec::wczytaj(string nazwa) {
+    FILE* strumien;
+    char tab[nazwa.length()];
+    for(int i=0;i<nazwa.length();i++) tab[i] = nazwa.at(i);
+    strumien = fopen(tab, "rt");
+    if(strumien==NULL || table == NULL){
+        cout<<"ERROR"<<endl;
+        return;
+    }
+    while (!feof(strumien)){
+        int number;
+        fscanf(strumien,"%d",&number);
+        dodaj(number);
+    }
+    fclose(strumien);
+}
+
+    void kopiec::zapisz(string nazwa) {
+        if (table==NULL) cout<<"Brak utworzonej tablicy."<<endl;
+        else {
+            ofstream file (nazwa);
+            if (!file.is_open()) {
+                cout<<"ERROR"<<endl;
+                return;
+            }
+            for (int i = 0; i < rozmiar; i++) {
+                file<<table[i]<<" ";
+            }
+        }
+    }
+
+void kopiec::menu() {
+    int n;
+    int liczba;
+    string name;
+    for(;;){
+        cout<<"Podaj numer akcji ktora chcesz wykonac:"<<endl;
+        cout<<"1. Dodaj"<<endl;
+        cout<<"2. Pokaz"<<endl;
+        cout<<"6. Usun"<<endl;
+        cout<<"9. Wyjdz"<<endl;
+        cout<<"10. Wczytaj dane"<<endl;
+        cout<<"11. Zapisz dane"<<endl;
+        cin.sync(); cin.clear();
+        cin>>n;
+        switch (n) {
+            case 1:
+                cin.sync(); cin.clear();
+                cout<<"Podaj liczbe"<<endl;
+                cin>>liczba;
+                dodaj(liczba);
+                break;
+            case 2:
+                pokaz("","",0);
+                break;
+            case 6:
+                cin.sync(); cin.clear();
+                usunKorzen();
+                break;
+            case 9:
+                //for(int i=0;i<rozmiar;i++) usunKorzen();
+                delete[] table;
+                exit(2137);
+            case 10:
+                cin.sync(); cin.clear();
+                cout<<"Podaj nazwe pliku"<<endl;
+                cin>>name;
+                wczytaj(name);
+                break;
+            case 11:
+                cin.sync(); cin.clear();
+                cout<<"Podaj nazwe pliku"<<endl;
+                cin>>name;
+                zapisz(name);
+                break;
+        }
+    }
+}

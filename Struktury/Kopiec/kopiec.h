@@ -5,6 +5,13 @@
 #ifndef SDIZO_KOPIEC_H
 #define SDIZO_KOPIEC_H
 #include <string>
+#include <iostream>
+#include <cstdio>
+#include <ctime>
+#include <ratio>
+#include <chrono>
+
+using namespace std;
 
 class kopiec {
 private:
@@ -13,8 +20,7 @@ public:
     kopiec();
     int * temp;
     int rozmiar = 0;
-    int* table;
-    kopiec(int liczba);
+    int* table = NULL;
     void dodaj(int liczba);
     void usunKorzen();
     void pokaz(std::string sp, std::string sn, int v);
@@ -22,6 +28,10 @@ public:
     void sort();
     bool isCorrect();
     void test(int iloscTestow, int wielkoscZestawu,int iloscOperacji);
+    void wczytaj(string nazwa);
+    void zapisz(string nazwa);
+
+    void menu();
 };
 
 

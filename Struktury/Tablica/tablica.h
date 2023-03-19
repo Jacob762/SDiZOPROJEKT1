@@ -5,16 +5,19 @@
 #ifndef SDIZO_TABLICA_H
 #define SDIZO_TABLICA_H
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
+#include <ctime>
+#include <ratio>
+#include <chrono>
 
 namespace std {
 
     class tablica {
     public:
-        int * table;
+        int * table = NULL;
         int * temp;
-        int rozmiar;
-        void init(int rozmiar);
+        int rozmiar = 0;
+        tablica();
         void menu();
         void dodajNaPoczatek(int liczba);
         void dodajNaKoniec(int liczba);
@@ -24,6 +27,8 @@ namespace std {
         void usunZDowolnegoMiejsca(int index);
         void pokaz();
         void relocate();
+        void wczytaj(string nazwa);
+        void zapisz(string nazwa);
     };
 
 } // std

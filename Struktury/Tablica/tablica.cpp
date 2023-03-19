@@ -2,21 +2,17 @@
 // Created by Jakub Klawon on 07/03/2023.
 //
 
+#include <fstream>
 #include "tablica.h"
 
 namespace std {
-    void tablica::init(int rozmiar) {
+    tablica::tablica(){
         table = new int[rozmiar];
-        for(int i=0;i<rozmiar;i++) table[i] = rand()%100+1;
     }
     void tablica::menu() {
-        cout<<"Podaj wielkosc poczatkowa tablicy:"<<endl;
         int n;
-        cin>>n;
         int liczba;
-        rozmiar = n;
-        init(n);
-        pokaz();
+        string name;
         for(;;){
             cout<<"Podaj numer akcji ktora chcesz wykonac:"<<endl;
             cout<<"1. Dodaj na koniec"<<endl;
@@ -28,6 +24,8 @@ namespace std {
             cout<<"7. Usun z poczatku"<<endl;
             cout<<"8. Usun z dowolnego miejsca"<<endl;
             cout<<"9. Wyszukaj element"<<endl;
+            cout<<"10. Wczytaj dane"<<endl;
+            cout<<"11. Zapisz dane"<<endl;
             cin.sync(); cin.clear();
             cin>>n;
             switch (n) {
@@ -72,15 +70,29 @@ namespace std {
                     cin.sync(); cin.clear();
                     cout<<"Podaj indeks"<<endl;
                     cin>>n;
+                    if(n>=rozmiar) break;
                     cout<<table[n]<<endl;
                     break;
                 case 3:
                     delete [] table;
                     exit(2137);
+                case 10:
+                    cin.sync(); cin.clear();
+                    cout<<"Podaj nazwe pliku"<<endl;
+                    cin>>name;
+                    wczytaj(name);
+                    break;
+                case 11:
+                    cin.sync(); cin.clear();
+                    cout<<"Podaj nazwe pliku"<<endl;
+                    cin>>name;
+                    zapisz(name);
+                    break;
             }
         }
     }
     void tablica::pokaz() {
+        if(rozmiar==0) return;
         for(int i=0;i<rozmiar;i++) cout<<table[i]<<" ";
         cout<<endl;
     }
@@ -104,25 +116,58 @@ namespace std {
         relocate();
     }
     void tablica::usunZKonca() {
+        if(rozmiar==0) return;
         temp = new int[--rozmiar];
-        for(int i=0;i<rozmiar-1;i++) temp[i] = table[i];
+        for(int i=0;i<rozmiar;i++) temp[i] = table[i];
         relocate();
     }
     void tablica::relocate(){
         delete [] table;
-        table = new int[rozmiar];
-        for(int i=0;i<rozmiar;i++) table[i] = temp[i];
-        delete [] temp;
+        table = temp;
     }
     void tablica::usunZPoczatku() {
+        if(rozmiar==0) return;
         temp = new int[--rozmiar];
         for(int i=0;i<rozmiar;i++) temp[i] = table[i+1];
         relocate();
     }
     void tablica::usunZDowolnegoMiejsca(int index) {
+        if(rozmiar==0) return;
+        if(index>=rozmiar) return;
         temp = new int[--rozmiar];
         for(int i=0;i<index;i++) temp[i] = table[i];
         for(int i=index;i<rozmiar;i++) temp[i] = table[i+1];
         relocate();
+    }
+
+    void tablica::wczytaj(string nazwa) {
+        FILE* strumien;
+        char tab[nazwa.length()];
+        for(int i=0;i<nazwa.length();i++) tab[i] = nazwa.at(i);
+        strumien = fopen(tab, "rt");
+        if(strumien==NULL || table == NULL){
+            cout<<"ERROR"<<endl;
+            return;
+        }
+        while (!feof(strumien)){
+            int number;
+            fscanf(strumien,"%d",&number);
+            dodajNaKoniec(number);
+        }
+        fclose(strumien);
+    }
+
+    void tablica::zapisz(string nazwa) {
+        if (table==NULL) cout<<"Brak utworzonej tablicy."<<endl;
+        else {
+            ofstream file (nazwa);
+            if (!file.is_open()) {
+                cout<<"ERROR"<<endl;
+                return;
+            }
+                for (int i = 0; i < rozmiar; i++) {
+                    file<<table[i]<<" ";
+                }
+        }
     }
 } // std

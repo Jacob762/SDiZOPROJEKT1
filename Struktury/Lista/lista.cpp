@@ -4,6 +4,7 @@
 
 #include "lista.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -73,9 +74,10 @@ void lista::pokaz() {
     listaElement* temp;
     temp = head;
     for(int i=0;i<rozmiar;i++){
-        cout<<temp->data<<endl;
+        cout<<temp->data<<" ";
         temp = temp -> nextEl;
     }
+    cout<<endl;
     delete temp;
 }
 
@@ -153,3 +155,120 @@ bool lista::safetyFirst(){
     }
     else return true;
 }
+void lista::wczytaj(string nazwa) {
+    FILE* strumien;
+    char tab[nazwa.length()];
+    for(int i=0;i<nazwa.length();i++) tab[i] = nazwa.at(i);
+    strumien = fopen(tab, "rt");
+    if(strumien==NULL || head!=NULL){
+        cout<<"ERROR"<<endl;
+        return;
+    }
+    while (!feof(strumien)){
+        int number;
+        fscanf(strumien,"%d",&number);
+        dodajNaKoniec(new listaElement(number));
+    }
+    fclose(strumien);
+}
+
+void lista::zapisz(string nazwa) {
+    if (!safetyFirst()){
+        cout<<"Brak utworzonej tablicy."<<endl;
+        return;
+    }
+    ofstream file (nazwa);
+    if (!file.is_open()) {
+        cout<<"ERROR"<<endl;
+        return;
+    }
+    listaElement* temp = head;
+    for(int i=0;i<rozmiar;i++){
+        file<< temp->data<< " ";
+        temp = temp -> nextEl;
+    }
+
+}
+
+void lista::menu() {
+    int n;
+    int liczba;
+    string name;
+    for(;;){
+        cout<<"Podaj numer akcji ktora chcesz wykonac:"<<endl;
+        cout<<"1. Dodaj na koniec"<<endl;
+        cout<<"2. Pokaz"<<endl;
+        cout<<"3. Wyszukaj element"<<endl;
+        cout<<"4. Dodaj na poczatek"<<endl;
+        cout<<"5. Dodaj w danym miejscu"<<endl;
+        cout<<"6. Usum z konca"<<endl;
+        cout<<"7. Usun z poczatku"<<endl;
+        cout<<"8. Usun z dowolnego miejsca"<<endl;
+        cout<<"9. Wyjdz"<<endl;
+        cout<<"10. Wczytaj dane"<<endl;
+        cout<<"11. Zapisz dane"<<endl;
+        cin.sync(); cin.clear();
+        cin>>n;
+        switch (n) {
+            case 1:
+                cin.sync(); cin.clear();
+                cout<<"Podaj liczbe"<<endl;
+                cin>>liczba;
+                dodajNaKoniec(new listaElement(liczba));
+                break;
+            case 2:
+                pokaz();
+                break;
+            case 4:
+                cin.sync(); cin.clear();
+                cout<<"Podaj liczbe"<<endl;
+                cin>>liczba;
+                dodajNaPoczatek(new listaElement(liczba));
+                break;
+            case 5:
+                cin.sync(); cin.clear();
+                cout<<"Podaj liczbe"<<endl;
+                cin>>liczba;
+                cout<<"Podaj indeks"<<endl;
+                cin>>n;
+                dodajWDowolnymMiejscu(n,new listaElement(liczba));
+                break;
+            case 6:
+                cin.sync(); cin.clear();
+                usunZKonca();
+                break;
+            case 7:
+                cin.sync(); cin.clear();
+                usunZPoczatku();
+                break;
+            case 8:
+                cin.sync(); cin.clear();
+                cout<<"Podaj indeks"<<endl;
+                cin>>n;
+                usunZDowolnegoMiejsca(n);
+                break;
+            case 3:
+                cin.sync(); cin.clear();
+                cout<<"Podaj indeks"<<endl;
+                cin>>n;
+                wyszukajElement(n);
+                break;
+            case 9:
+                for(int i=0;i<rozmiar;i++) usunZKonca();
+                exit(2137);
+            case 10:
+                cin.sync(); cin.clear();
+                cout<<"Podaj nazwe pliku"<<endl;
+                cin>>name;
+                wczytaj(name);
+                break;
+            case 11:
+                cin.sync(); cin.clear();
+                cout<<"Podaj nazwe pliku"<<endl;
+                cin>>name;
+                zapisz(name);
+                break;
+        }
+    }
+}
+

@@ -5,6 +5,13 @@
 #ifndef SDIZO_LISTA_H
 #define SDIZO_LISTA_H
 #include "listaElement.h"
+#include <iostream>
+#include <cstdio>
+#include <ctime>
+#include <ratio>
+#include <chrono>
+
+using namespace std;
 
 class lista {
 private:
@@ -25,6 +32,11 @@ public:
     void usunZKonca();
     void usunZDowolnegoMiejsca(int index);
     bool safetyFirst();
+    void test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow);
+    void wczytaj(string nazwa);
+    void zapisz(string nazwa);
+
+    void menu();
 };
 
 
