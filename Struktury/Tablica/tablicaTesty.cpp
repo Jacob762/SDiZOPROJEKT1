@@ -123,5 +123,25 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
         tablicaFile<<endl;
         tablicaFile<<endl<<endl;
     }
-
+    for(int j=0;j<iloscWynikow;j++){
+        srednia=0;
+        for(int i=0;i<iloscOperacji;i++){
+            for(int k=0;k<wielkoscZestawu;k++) tablicaTest.dodajNaKoniec(rand()%1000+1);
+            int indeks = tablicaTest.table[rand()%(wielkoscZestawu/2+(wielkoscZestawu/2 -50))];
+            t1 = chrono::high_resolution_clock::now();
+            tablicaTest.wyszukaj(indeks);
+            t2 = chrono::high_resolution_clock::now();
+            chrono::duration<double> time_span = std::chrono::duration_cast<chrono::duration<double>>(t2 - t1);
+            tablicaCzasow[i] = std::chrono::duration<double>(time_span).count();
+            srednia+=tablicaCzasow[i];
+            for(int k=0;k<wielkoscZestawu;k++) tablicaTest.usunZKonca();
+        }
+        tablicaSrednich1[j] = srednia/1000;
+    }
+    if(tablicaFile.is_open()){
+        tablicaFile<<"WYNIKI WYSZUKIWANIA Z DOWOLNEGO MIEJSCA W POLOWIE ZESTAWU: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<endl;
+        tablicaFile<<endl<<endl;
+    }
 }

@@ -56,4 +56,25 @@ void kopiecTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
         for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
         tablicaFile<<endl<<endl;
     }
+    for(int j=0;j<iloscWynikow;j++){
+        srednia=0;
+        for(int i=0;i<iloscOperacji;i++){
+            for(int k=0;k<wielkoscZestawu;k++) kopie.dodaj(rand()%1000+1);
+            int indeks = kopie.table[rand()%(wielkoscZestawu/2+(wielkoscZestawu/2 -50))];
+            t1 = chrono::high_resolution_clock::now();
+            kopie.wyszukaj(indeks);
+            t2 = chrono::high_resolution_clock::now();
+            chrono::duration<double> time_span = std::chrono::duration_cast<chrono::duration<double>>(t2 - t1);
+            tablicaCzasow[i] = std::chrono::duration<double>(time_span).count();
+            srednia+=tablicaCzasow[i];
+            for(int k=0;k<wielkoscZestawu;k++) kopie.usunKorzen();
+        }
+        tablicaSrednich1[j] = srednia/1000;
+    }
+    if(tablicaFile.is_open()){
+        tablicaFile<<"WYNIKI WYSZUKIWANIA Z DOWOLNEGO MIEJSCA W POLOWIE ZESTAWU: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<endl;
+        tablicaFile<<endl<<endl;
+    }
 }

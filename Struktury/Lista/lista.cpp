@@ -156,20 +156,15 @@ bool lista::safetyFirst(){
     else return true;
 }
 void lista::wczytaj(string nazwa) {
-    FILE* strumien;
-    char tab[nazwa.length()];
-    for(int i=0;i<nazwa.length();i++) tab[i] = nazwa.at(i);
-    strumien = fopen(tab, "rt");
-    if(strumien==NULL || head!=NULL){
+    fstream file (nazwa,std::ios_base::in);
+    if (!file.is_open() || head!=NULL) {
         cout<<"ERROR"<<endl;
         return;
     }
-    while (!feof(strumien)){
-        int number;
-        fscanf(strumien,"%d",&number);
+    int number;
+    while (file >> number){
         dodajNaKoniec(new listaElement(number));
     }
-    fclose(strumien);
 }
 
 void lista::zapisz(string nazwa) {
@@ -187,7 +182,6 @@ void lista::zapisz(string nazwa) {
         file<< temp->data<< " ";
         temp = temp -> nextEl;
     }
-
 }
 
 void lista::menu() {

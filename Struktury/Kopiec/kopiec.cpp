@@ -74,10 +74,8 @@ using namespace std;
     }
 
     void kopiec::relocate(){
-    if(!start) delete [] table;
-    table = new int[rozmiar];
-    for(int i=0;i<rozmiar;i++) table[i] = temp[i];
-    delete [] temp;
+        delete [] table;
+        table = temp;
 }
 
     bool kopiec::isCorrect(){
@@ -114,20 +112,15 @@ using namespace std;
     }
 
     void kopiec::wczytaj(string nazwa) {
-    FILE* strumien;
-    char tab[nazwa.length()];
-    for(int i=0;i<nazwa.length();i++) tab[i] = nazwa.at(i);
-    strumien = fopen(tab, "rt");
-    if(strumien==NULL || table == NULL){
-        cout<<"ERROR"<<endl;
-        return;
-    }
-    while (!feof(strumien)){
+        fstream file (nazwa,std::ios_base::in);
+        if (!file.is_open()) {
+            cout<<"ERROR"<<endl;
+            return;
+        }
         int number;
-        fscanf(strumien,"%d",&number);
-        dodaj(number);
-    }
-    fclose(strumien);
+        while (file >> number){
+            dodaj(number);
+        }
 }
 
     void kopiec::zapisz(string nazwa) {
@@ -144,6 +137,15 @@ using namespace std;
         }
     }
 
+    int kopiec::wyszukaj(int number){
+        for(int i=0;i<rozmiar;i++){
+            if(table[i]==number){
+                return i;
+            }
+        }
+        return -42;
+    }
+
 void kopiec::menu() {
     int n;
     int liczba;
@@ -153,6 +155,7 @@ void kopiec::menu() {
         cout<<"1. Dodaj"<<endl;
         cout<<"2. Pokaz"<<endl;
         cout<<"6. Usun"<<endl;
+        cout<<"7. Wyszukaj liczbe"<<endl;
         cout<<"9. Wyjdz"<<endl;
         cout<<"10. Wczytaj dane"<<endl;
         cout<<"11. Zapisz dane"<<endl;
@@ -171,6 +174,13 @@ void kopiec::menu() {
             case 6:
                 cin.sync(); cin.clear();
                 usunKorzen();
+                break;
+            case 7:
+                cin.sync(); cin.clear();
+                cout<<"Podaj liczbe"<<endl;
+                cin >>n;
+                liczba = wyszukaj(n);
+                if(liczba!=42) cout<<"INDEKS SZUKANEJ LICZBY TO "<<liczba<<endl;
                 break;
             case 9:
                 //for(int i=0;i<rozmiar;i++) usunKorzen();

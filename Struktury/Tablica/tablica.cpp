@@ -68,10 +68,10 @@ namespace std {
                     break;
                 case 9:
                     cin.sync(); cin.clear();
-                    cout<<"Podaj indeks"<<endl;
+                    cout<<"Podaj liczbe"<<endl;
                     cin>>n;
-                    if(n>=rozmiar) break;
-                    cout<<table[n]<<endl;
+                    liczba = wyszukaj(n);
+                    if(liczba!=-42) cout<<liczba<<endl;
                     break;
                 case 3:
                     delete [] table;
@@ -141,20 +141,15 @@ namespace std {
     }
 
     void tablica::wczytaj(string nazwa) {
-        FILE* strumien;
-        char tab[nazwa.length()];
-        for(int i=0;i<nazwa.length();i++) tab[i] = nazwa.at(i);
-        strumien = fopen(tab, "rt");
-        if(strumien==NULL || table == NULL){
+        fstream file (nazwa,std::ios_base::in);
+        if (!file.is_open()) {
             cout<<"ERROR"<<endl;
             return;
         }
-        while (!feof(strumien)){
-            int number;
-            fscanf(strumien,"%d",&number);
+        int number;
+        while (file >> number){
             dodajNaKoniec(number);
         }
-        fclose(strumien);
     }
 
     void tablica::zapisz(string nazwa) {
@@ -169,5 +164,14 @@ namespace std {
                     file<<table[i]<<" ";
                 }
         }
+    }
+
+    int tablica::wyszukaj(int number){
+        for(int i=0;i<rozmiar;i++){
+            if(table[i]==number){
+                return i;
+            }
+        }
+        return -42;
     }
 } // std

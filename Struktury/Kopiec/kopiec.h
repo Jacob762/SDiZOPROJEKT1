@@ -32,6 +32,8 @@ public:
     void zapisz(string nazwa);
 
     void menu();
+
+    int wyszukaj(int number);
 };
 
 

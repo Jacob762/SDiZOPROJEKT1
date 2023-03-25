@@ -29,6 +29,8 @@ namespace std {
         void relocate();
         void wczytaj(string nazwa);
         void zapisz(string nazwa);
+
+        int wyszukaj(int number);
     };
 
 } // std

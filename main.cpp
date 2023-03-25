@@ -6,14 +6,66 @@
 #include "Struktury/Tablica/tablicaTesty.h"
 #include "Struktury/Lista/listaTesty.h"
 #include "Struktury/Kopiec/kopiecTesty.h"
+#include <cstdlib>
 
 using namespace std;
+
 
 int main() {
     tablica tab = tablica();
     lista list = lista();
     kopiec kopiec1 = kopiec();
-    for(;;){
+    RBTree* drzewo = new RBTree();
+    ::srand(time(NULL));
+    //for(int i=0;i<100;i++) drzewo->dodaj(rand()%100+2);
+    //drzewo->wczytaj("plik.txt");
+    //drzewo->printRBT("","",drzewo->root);
+    drzewo->wczytaj("plik.txt");
+    drzewo->print2D(drzewo->root);
+    drzewo->usun(drzewo->wyszukaj(18));
+    drzewo->usun(drzewo->wyszukaj(26));
+    drzewo->usun(drzewo->wyszukaj(7));
+    //drzewo->usun(drzewo->wyszukaj(9));
+    drzewo->usun(drzewo->wyszukaj(20));
+    drzewo->print2D(drzewo->root);
+    cout<<endl;
+    //drzewo->dodaj(11);
+    cout<<endl<<endl;
+    drzewo->print2D(drzewo->root);
+    drzewo->usun(drzewo->wyszukaj(28));
+    cout<<endl<<endl;
+    cout<<endl<<endl;
+    drzewo->print2D(drzewo->root);
+    drzewo->usun(drzewo->wyszukaj(4));
+    cout<<endl<<endl;
+    cout<<endl<<endl;
+    drzewo->print2D(drzewo->root);
+    drzewo->usun(drzewo->wyszukaj(5));
+    cout<<endl<<endl;
+    cout<<endl<<endl;
+    drzewo->print2D(drzewo->root);
+    drzewo->usun(drzewo->wyszukaj(8));
+    cout<<endl<<endl;
+    cout<<endl<<endl;
+    drzewo->print2D(drzewo->root);
+    drzewo->usun(drzewo->wyszukaj(10));
+    cout<<endl;
+    //drzewo->dodaj(11);
+    cout<<endl<<endl;
+    drzewo->print2D(drzewo->root);
+    drzewo->usun(drzewo->wyszukaj(14));
+    drzewo->usun(drzewo->wyszukaj(12));
+    cout<<endl;
+    //drzewo->dodaj(11);
+    cout<<endl<<endl;
+    drzewo->print2D(drzewo->root);
+    drzewo->dodaj(5);
+    cout<<endl;
+    //drzewo->dodaj(11);
+    cout<<endl<<endl;
+    drzewo->print2D(drzewo->root);
+   // drzewo->printData(drzewo->root);
+    /*for(;;){
         cout<<"Wybierz strukture"<<endl;
         cout<<"1. tablica dynamiczna"<<endl;
         cout<<"2. lista dwukierunkowa"<<endl;
@@ -34,7 +86,7 @@ int main() {
             case 4:
                 exit(2138);
         }
-    }
+    }*/
     //tablicaTesty testy = tablicaTesty(20000,100,10);
     //listaTesty testy1 = listaTesty(20000,100,10);
     //kopiecTesty testy2 = kopiecTesty(20000,100,10);
@@ -135,3 +187,4 @@ int main() {
 
     return 0;
 }
+
