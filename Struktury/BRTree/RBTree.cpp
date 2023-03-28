@@ -217,128 +217,94 @@ void RBTree::printData(RBTree::RBTNode* rote){
 }
 
 void RBTree::usun(RBTree::RBTNode* node){
-    bool dodatkowy = NULL;
-    char kolor = NULL;
-    if(node==&straznik) return;
+    bool strona = NULL;
+    if(node==node->up->right) {
+        strona = true;
+    }
+    else {
+        strona = false;
+    }
+    bool problem = false;
+    if(node->color=='B' && node->left->color=='B'&&node->right->color=='B') problem = true;
+    //if(node==&straznik) return;
     RBTNode *syn = nullptr,*ojciec,*naznaczony= nullptr;
     ojciec = node->up;
     if(node->left==&straznik) {//przypadek lewy syn nie istnieje
         syn = node->right;
-        syn->up = ojciec;
-        if(node==ojciec->left) ojciec->left=syn;
-        else ojciec->right=syn;
-        if(node->color=='B') {
-            if(syn->color=='R'&&syn->up->color=='R') syn->color='B';
+        if(syn==&straznik){ //psuje bo straznik wskazuje na zlego brata
+            if(node==node->up->left) node->up->left = &straznik;
+            else node->up->right = &straznik;
         }
-        if(syn==&straznik) naznaczony=syn;
+        node->data = syn->data;
+        if(syn!=&straznik) usun(syn);
     }
     else if(node->right==&straznik) {//przypadek prawy syn nie istnieje
         syn = node->left;
-        syn->up = ojciec;
-        if(node==ojciec->left) ojciec->left=syn;
-        else ojciec->right=syn;
-        if(node->color=='B') syn->color='B';
-
+        node->data = syn->data;
+        usun(syn);
     }else{ //dwaj synowie
         syn = nastepnik(node);
         if(syn==node->right){// prawy syn to nastepnik
-            node->left->up = syn;
-            syn->left = node->left;
-            syn->up = ojciec;
-            if(node==ojciec->left) ojciec->left=syn;
-            else ojciec->right=syn;
-            if(syn->color=='B'){
-                naznaczony = syn->right;
-                dodatkowy = false;
-            }
-            syn->color = node->color;
+            node -> data = syn -> data;
+            usun(syn);
         } else{ //nastepnik to nie prawy syn, tylko jego lewy syn
-            node->right->up = syn;
-            node->left->up = syn;
-            if(node==ojciec->left) ojciec->left=syn;
-            else ojciec->right=syn;
-            syn->up->left = syn->right;
-            syn->right->up = node->right;
-            syn->right = node->right;
-            syn->left = node->left;
-            syn->up = ojciec;
-            if(syn->color=='B'&&syn->right->left->color=='B'){
-                naznaczony=syn->right->left;
-                dodatkowy = true;
-            } else syn->right->left->color='B';
-            //naznaczony->color='B';
+            node -> data = syn -> data;
+            usun(syn);
         }
     }
-    if(ojciec==&straznik) root = syn;
-    //print2DUtil(root,0);
-    if(naznaczony) {//przypadek ostatni returnuje, jesli zaden z przypadkow nie zachodzi to tez returnuje
-        while (naznaczony!=root && naznaczony->color=='B'){
-            if(naznaczony==&straznik){ //kiedy straznik jest "nzanzczony", trzeba poprawic tu jakos zeby reagowal kiedy jest podwojnie czarny
-                if(!dodatkowy) ojciec = syn;
-                else ojciec = syn->right;
-            } else ojciec = naznaczony->up;
-            if(ojciec->left==naznaczony){ //na lewo
-                if(ojciec->right->color=='R'){ //przypadek 1
-                    rotacjaWLewo(ojciec);
-                    ojciec = naznaczony->up;
-                    kolor = naznaczony->up->color;
-                    ojciec->color = ojciec->up->color;
-                    ojciec->up->color = kolor;
+    if(ojciec==&straznik) root = node;
+    if(problem){ //fixup drzewa, node czerwony, case1
+        RBTNode *brat;
+        while(node!=root && node->color=='B'){ //root jest podowjnie czarny, case2
+            brat = wskazBrata(node);
+            if(brat->color=='B' && brat->right->color=='B' && brat->left->color=='B'){ //brat usuwanego jest czarny i jego dzieci sa tez czarne, case3
+                brat->color = 'R';
+                if(node->up->color=='R'){
+                    node->up->color = 'B';
+                    //dodatkowy = false;
+                    break;
                 }
-                if(ojciec->right->color=='B'){//przypadek 2
-                    if(ojciec->right->left->color=='B'&&ojciec->right->right->color=='B'){
-                        ojciec->right->color='R';
-                        naznaczony=ojciec;
-                        continue;
-                    }
-                    if(ojciec->right->left->color=='R'&&ojciec->right->right->color=='B'){//przypadek 3
-                        rotacjaWPrawo(ojciec->right);
-                        ojciec->right->right->color = kolor;
-                        ojciec->right->right->color = ojciec->right->color;
-                        ojciec->right->color = kolor;
-                    }
-                    if(ojciec->right->right->color=='R'){//przypadek 4
-                        rotacjaWLewo(ojciec);
-                        ojciec->up->color = 'B';
-                        ojciec->up->right->color='B';
-                        break;
-                    }
-                }
-                break;
+                node = node->up;
+                continue;
             }
-            if(ojciec->right==naznaczony){ //lustrzane
-                if(ojciec->left->color=='R'){
-                    rotacjaWPrawo(ojciec);
-                    ojciec = naznaczony->up;
-                    kolor = naznaczony->up->color;
-                    ojciec->color = ojciec->up->color;
-                    ojciec->up->color = kolor;
+            if(brat->color=='R'){ //brat usuwanego czerwon, cas4
+                brat->color = 'B';
+                brat->up->color = 'R';
+                if(strona){
+                    rotacjaWPrawo(brat->up);
+                } else rotacjaWLewo(brat->up);
+                continue;
+            }
+            if(strona && brat->color=='B' && brat->left->color=='B' && brat->right->color=='R'){ //brat usuwaengo czarny, blizszy syn czewrony
+                    brat->right->color = 'B';
+                    brat -> color = 'R';
+                    rotacjaWLewo(brat);
+            } else if(!strona && brat->color=='B' && brat->left->color=='R' && brat->right->color=='B'){ //przypadek lustrzany
+                brat->left->color = 'B';
+                brat -> color = 'R';
+                rotacjaWPrawo(brat);
+            }
+            brat = wskazBrata(node);
+            if(strona && brat->color=='B' && brat->left->color=='R' && brat->right->color=='B'){//brat usuwaengo czarny, dalszy syn czewrony
+                if(brat->up->color=='R') {
+                    brat->color = 'R';
+                    brat->up->color = 'B';
                 }
-                if(ojciec->left->color=='B'){
-                    if(ojciec->left->left->color=='B'&&ojciec->left->right->color=='B'){
-                        ojciec->left->color='R';
-                        naznaczony=ojciec;
-                        continue;
-                    }
-                    if(ojciec->left->right->color=='R'&&ojciec->left->left->color=='B'){
-                        rotacjaWLewo(ojciec->left);
-                        ojciec->left->left->color = kolor;
-                        ojciec->left->left->color = ojciec->left->color;
-                        ojciec->left->color = kolor;
-                    }
-                    if(ojciec->left->left->color=='R'){
-                        rotacjaWPrawo(ojciec);
-                        ojciec->up->color = ojciec->color;
-                        ojciec->color = 'B';
-                        ojciec->up->left->color='B';
-                        break;
-                    }
+                rotacjaWPrawo(brat->up);
+                brat->left->color = 'B';
+                break;
+            }else if(!strona&&brat->color=='B' && brat->left->color=='B' && brat->right->color=='R'){
+                if(brat->up->color=='R') {
+                    brat->color = 'R';
+                    brat->up->color = 'B';
                 }
+                rotacjaWLewo(brat->up);
+                brat->right->color = 'B';
                 break;
             }
         }
     }
-    delete node;
+    //if(syn!=&straznik) delete syn;
 }
 
 RBTree::RBTNode* RBTree::nastepnik(RBTree::RBTNode* node){
@@ -346,4 +312,20 @@ RBTree::RBTNode* RBTree::nastepnik(RBTree::RBTNode* node){
         if(node->right->left!=&straznik) return node->right->left;
         else return node->right;
     }else return &straznik;
+}
+
+RBTree::RBTNode* RBTree::wskazBrata(RBTree::RBTNode* node){
+    RBTNode* brat;
+    if(node->data==straznik.data){
+        if(node->up->right==&straznik) brat = node->up->left;
+        else brat = node->up->right;
+        return brat;
+    }
+    if(node==node->up->right) {
+        brat = node->up->left;
+    }
+    else {
+        brat = node->up->right;
+    }
+    return brat;
 }

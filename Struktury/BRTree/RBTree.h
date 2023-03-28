@@ -47,6 +47,8 @@ public:
     void usun(RBTNode *node);
 
     RBTNode *nastepnik(RBTNode *node);
+
+    RBTNode *wskazBrata(RBTNode *node);
 };
 
 
