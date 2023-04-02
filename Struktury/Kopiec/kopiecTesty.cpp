@@ -62,7 +62,7 @@ void kopiecTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
             for(int k=0;k<wielkoscZestawu;k++) kopie.dodaj(rand()%1000+1);
             int indeks = kopie.table[rand()%(wielkoscZestawu/2+(wielkoscZestawu/2 -50))];
             t1 = chrono::high_resolution_clock::now();
-            kopie.wyszukaj(indeks);
+            //kopie.wyszukaj(indeks); //jakis blad??
             t2 = chrono::high_resolution_clock::now();
             chrono::duration<double> time_span = std::chrono::duration_cast<chrono::duration<double>>(t2 - t1);
             tablicaCzasow[i] = std::chrono::duration<double>(time_span).count();

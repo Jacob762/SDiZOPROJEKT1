@@ -5,6 +5,7 @@
 #ifndef SDIZO_RBTREE_H
 #define SDIZO_RBTREE_H
 #include <string>
+#include "../Tablica/tablica.h"
 
 using namespace std;
 class RBTree {
@@ -33,7 +34,7 @@ public:
 
     void zapisz(string nazwa, string sp, string sn, RBTNode * p );
 
-    void wczytaj(string nazwa);
+    void wczytaj(string nazwa,tablica &tab);
     void printRBTdozapisu (  RBTNode * p ,string nazwa);
 
     void print2DUtil(RBTNode *root, int space);
@@ -49,6 +50,8 @@ public:
     RBTNode *nastepnik(RBTNode *node);
 
     RBTNode *wskazBrata(RBTNode *node);
+
+    void usunDrzewo(RBTNode *root);
 };
 
 

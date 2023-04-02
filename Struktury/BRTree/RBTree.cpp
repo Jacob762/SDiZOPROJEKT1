@@ -166,7 +166,7 @@ void RBTree::rotacjaWPrawo(RBTNode* node){
     }
 }
 
-void RBTree::wczytaj(string nazwa) {
+void RBTree::wczytaj(string nazwa, tablica &tab) {
     fstream file (nazwa,std::ios_base::in);
     if (!file.is_open()) {
         cout<<"ERROR"<<endl;
@@ -175,6 +175,7 @@ void RBTree::wczytaj(string nazwa) {
     int number;
     while (file >> number){
         dodaj(number);
+        tab.dodajNaKoniec(number);
     }
 }
 
@@ -212,11 +213,13 @@ void RBTree::printData(RBTree::RBTNode* rote){
     if (rote == &straznik)
         return;
     printData(rote->right);
-    cout << rote->data << " ";
+    cout << rote->data << ":"<<rote->color<<" ";
     printData(rote->left);
 }
 
-void RBTree::usun(RBTree::RBTNode* node){
+void RBTree::usun(RBTree::RBTNode* node){ //usuwanie roota nie dziala w pelni poprawnie, buguje sie przy delete, ciagle usuwanie roota nie dziala, nawet z wylaczonym deletem
+    //bool LonelyRootCheck = false;
+    //if(root->right==&straznik&&root->left==&straznik&&node==root) LonelyRootCheck=true;
     bool strona = NULL;
     if(node==node->up->right) {
         strona = true;
@@ -227,8 +230,7 @@ void RBTree::usun(RBTree::RBTNode* node){
     bool problem = false;
     if(node->color=='B' && node->left->color=='B'&&node->right->color=='B') problem = true;
     //if(node==&straznik) return;
-    RBTNode *syn = nullptr,*ojciec,*naznaczony= nullptr;
-    ojciec = node->up;
+    RBTNode *syn = nullptr,*ojciec;
     if(node->left==&straznik) {//przypadek lewy syn nie istnieje
         syn = node->right;
         if(syn==&straznik){ //psuje bo straznik wskazuje na zlego brata
@@ -244,14 +246,11 @@ void RBTree::usun(RBTree::RBTNode* node){
         usun(syn);
     }else{ //dwaj synowie
         syn = nastepnik(node);
-        if(syn==node->right){// prawy syn to nastepnik
-            node -> data = syn -> data;
-            usun(syn);
-        } else{ //nastepnik to nie prawy syn, tylko jego lewy syn
-            node -> data = syn -> data;
-            usun(syn);
-        }
+        // prawy syn to nastepnik
+        node->data = syn->data;
+        usun(syn);
     }
+    ojciec = node->up;
     if(ojciec==&straznik) root = node;
     if(problem){ //fixup drzewa, node czerwony, case1
         RBTNode *brat;
@@ -259,7 +258,7 @@ void RBTree::usun(RBTree::RBTNode* node){
             brat = wskazBrata(node);
             if(brat->color=='B' && brat->right->color=='B' && brat->left->color=='B'){ //brat usuwanego jest czarny i jego dzieci sa tez czarne, case3
                 brat->color = 'R';
-                if(node->up->color=='R'){
+                if(node->up->color=='R' && brat!=&straznik){
                     node->up->color = 'B';
                     //dodatkowy = false;
                     break;
@@ -275,17 +274,17 @@ void RBTree::usun(RBTree::RBTNode* node){
                 } else rotacjaWLewo(brat->up);
                 continue;
             }
-            if(strona && brat->color=='B' && brat->left->color=='B' && brat->right->color=='R'){ //brat usuwaengo czarny, blizszy syn czewrony
+            if(strona && brat->color=='B'  && brat->right->color=='R'){ //brat usuwaengo czarny, blizszy syn czewrony
                     brat->right->color = 'B';
                     brat -> color = 'R';
                     rotacjaWLewo(brat);
-            } else if(!strona && brat->color=='B' && brat->left->color=='R' && brat->right->color=='B'){ //przypadek lustrzany
+            } else if(!strona && brat->color=='B' && brat->left->color=='R' ){ //przypadek lustrzany
                 brat->left->color = 'B';
                 brat -> color = 'R';
                 rotacjaWPrawo(brat);
             }
             brat = wskazBrata(node);
-            if(strona && brat->color=='B' && brat->left->color=='R' && brat->right->color=='B'){//brat usuwaengo czarny, dalszy syn czewrony
+            if(strona && brat->color=='B' && brat->left->color=='R' ){//brat usuwaengo czarny, dalszy syn czewrony
                 if(brat->up->color=='R') {
                     brat->color = 'R';
                     brat->up->color = 'B';
@@ -293,7 +292,7 @@ void RBTree::usun(RBTree::RBTNode* node){
                 rotacjaWPrawo(brat->up);
                 brat->left->color = 'B';
                 break;
-            }else if(!strona&&brat->color=='B' && brat->left->color=='B' && brat->right->color=='R'){
+            }else if(!strona&&brat->color=='B'  && brat->right->color=='R'){
                 if(brat->up->color=='R') {
                     brat->color = 'R';
                     brat->up->color = 'B';
@@ -304,12 +303,20 @@ void RBTree::usun(RBTree::RBTNode* node){
             }
         }
     }
-    //if(syn!=&straznik) delete syn;
+    //if(LonelyRootCheck) root = &straznik;
+    //if(syn!=&straznik && node!=root) delete syn;
 }
 
 RBTree::RBTNode* RBTree::nastepnik(RBTree::RBTNode* node){
+    RBTNode* temp;
     if(node->right!=&straznik){
-        if(node->right->left!=&straznik) return node->right->left;
+        if(node->right->left!=&straznik) {
+            temp = node->right->left;
+            while(temp->left!=&straznik){
+                temp = temp -> left;
+            }
+            return temp;
+        }
         else return node->right;
     }else return &straznik;
 }
@@ -328,4 +335,11 @@ RBTree::RBTNode* RBTree::wskazBrata(RBTree::RBTNode* node){
         brat = node->up->right;
     }
     return brat;
+}
+
+void RBTree::usunDrzewo(RBTree::RBTNode* root){
+    if(root==&straznik) return;
+    usunDrzewo(root->left);
+    usun(root);
+    usunDrzewo(root->right);
 }
