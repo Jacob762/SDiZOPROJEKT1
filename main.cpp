@@ -21,20 +21,7 @@ int main() {
     //drzewo->wczytaj("plik.txt");
     //drzewo->printRBT("","",drzewo->root);
 
-    drzewo->wczytaj("nazwa.txt", tab);
-    drzewo->print2D(drzewo->root);
-    cout<<endl<<endl<<endl<<endl;
-    tab.pokaz();
-    for(int i=0;i<5;i++){
-        drzewo->usun(drzewo->wyszukaj(tab.table[i]));
-    }
-    //drzewo->usun(drzewo->wyszukaj(34));
-    cout<<endl<<endl<<endl<<endl;
-    drzewo->printData(drzewo->root);
-    drzewo->print2D(drzewo->root);
-
-    //drzewo->print2D(drzewo->root);
-   // drzewo->printData(drzewo->root);
+    drzewo->menu();
     /*for(;;){
         cout<<"Wybierz strukture"<<endl;
         cout<<"1. tablica dynamiczna"<<endl;

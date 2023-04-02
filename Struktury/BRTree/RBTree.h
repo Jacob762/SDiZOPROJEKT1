@@ -34,7 +34,7 @@ public:
 
     void zapisz(string nazwa, string sp, string sn, RBTNode * p );
 
-    void wczytaj(string nazwa,tablica &tab);
+    void wczytaj(string nazwa);
     void printRBTdozapisu (  RBTNode * p ,string nazwa);
 
     void print2DUtil(RBTNode *root, int space);
@@ -45,13 +45,15 @@ public:
 
     void printDataDoZapisu(RBTNode *p,ofstream file);
 
-    void usun(RBTNode *node);
+    bool usun(RBTNode *node);
 
     RBTNode *nastepnik(RBTNode *node);
 
     RBTNode *wskazBrata(RBTNode *node);
 
     void usunDrzewo(RBTNode *root);
+
+    void menu();
 };
 
 
