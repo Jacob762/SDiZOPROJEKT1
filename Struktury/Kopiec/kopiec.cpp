@@ -19,9 +19,9 @@ using namespace std;
         string s;
         string cr, cl, cp;
         cr = cl = cp = "  ";
-        cr [ 0 ] = 218; cr [ 1 ] = 196;
-        cl [ 0 ] = 192; cl [ 1 ] = 196;
-        cp [ 0 ] = 179;
+        cr [ 0 ] = ' '; cr [ 1 ] = ' ';
+        cl [ 0 ] = ' '; cl [ 1 ] = ' ';
+        cp [ 0 ] = ' ';
         if( v < rozmiar )
         {
             s = sp;
@@ -30,7 +30,7 @@ using namespace std;
 
             s = s.substr ( 0, sp.length( ) - 2 );
 
-            cout << s << sn << table [ v ] << endl;
+            cout << s <<sn<< table [ v ] << endl;
 
             s = sp;
             if( sn == cl ) s [ s.length( ) - 2 ] = ' ';
@@ -47,14 +47,17 @@ using namespace std;
     }
 
     void kopiec::usunKorzen() {
-        if(rozmiar==0) return;
+        if(rozmiar==0) {
+            cout<<"Kopiec pusty"<<endl;
+            return;
+        }
         swap(table[0],table[rozmiar-1]);
         temp = new int[--rozmiar];
         for(int i=0;i<rozmiar;i++) temp[i] = table[i];
         relocate();
         int i=0;
         int j=1;
-        while(j < rozmiar){ // tu chyba bug?, kod z neta dziala
+        while(j < rozmiar){
             if(j+1 < rozmiar && table[j+1] > table[j]) j++;
             if(table[i] >= table[j]) break;
             swap(table[i],table[j]);
@@ -114,20 +117,15 @@ using namespace std;
     }
 
     void kopiec::wczytaj(string nazwa) {
-    FILE* strumien;
-    char tab[nazwa.length()];
-    for(int i=0;i<nazwa.length();i++) tab[i] = nazwa.at(i);
-    strumien = fopen(tab, "rt");
-    if(strumien==NULL || table == NULL){
-        cout<<"ERROR"<<endl;
-        return;
-    }
-    while (!feof(strumien)){
+        fstream file (nazwa,std::ios_base::in);
+        if (!file.is_open()) {
+            cout<<"ERROR"<<endl;
+            return;
+        }
         int number;
-        fscanf(strumien,"%d",&number);
-        dodaj(number);
-    }
-    fclose(strumien);
+        while (file >> number){
+            dodaj(number);
+        }
 }
 
     void kopiec::zapisz(string nazwa) {
@@ -152,6 +150,7 @@ void kopiec::menu() {
         cout<<"Podaj numer akcji ktora chcesz wykonac:"<<endl;
         cout<<"1. Dodaj"<<endl;
         cout<<"2. Pokaz"<<endl;
+        cout<<"3. Wyszukaj element"<<endl;
         cout<<"6. Usun"<<endl;
         cout<<"9. Wyjdz"<<endl;
         cout<<"10. Wczytaj dane"<<endl;
@@ -167,6 +166,12 @@ void kopiec::menu() {
                 break;
             case 2:
                 pokaz("","",0);
+                break;
+            case 3:
+                cin.sync(); cin.clear();
+                cout<<"Podaj liczbe"<<endl;
+                cin>>liczba;
+                cout<<"Indeks liczby: "<<wyszukaj(liczba)<<endl;
                 break;
             case 6:
                 cin.sync(); cin.clear();
@@ -191,3 +196,23 @@ void kopiec::menu() {
         }
     }
 }
+
+int kopiec::wyszukaj(int number) {
+    if (rozmiar == 0) {
+        cout << "Kopiec pusty" << endl;
+        return -49;
+    }
+    int i=0;
+    if(table[i]==number) return i;
+    return szukaj(i, number);
+}
+
+int kopiec::szukaj(int indeks, int number){
+        int te;
+    if(table[indeks]==number) return indeks;
+    if(2*indeks+1 >= rozmiar||2*indeks+2 >= rozmiar) return -34;
+    te = szukaj(2*indeks+1,number);
+    if(te == -34) te = szukaj(2*indeks+2,number);
+    return te;
+    }
+

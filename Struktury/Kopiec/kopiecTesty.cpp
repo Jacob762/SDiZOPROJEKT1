@@ -6,10 +6,8 @@
 
 using namespace std;
 
-kopiecTesty::kopiecTesty(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
+kopiecTesty::kopiecTesty() {
     kopie = kopiec();
-    test(wielkoscZestawu,iloscOperacji,iloscWynikow);
-    cout<<"TESTY NA KOPCU ZAKONCZONE SUKCESEM"<<endl;
 }
 
 void kopiecTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
@@ -49,10 +47,10 @@ void kopiecTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
     }
     if(tablicaFile.is_open()){
         tablicaFile<<"WLASCIWOSCI: WIELKOSC ZESTAWU: "<< wielkoscZestawu<<" ILOSC OPERACJI: "<<iloscOperacji<<endl;
-        tablicaFile<<"WYNIKI DODAWANIA: ";
+        tablicaFile<<"DODAWANIE: ";
         for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
         tablicaFile<<endl;
-        tablicaFile<<"WYNIKI USUWANIA: ";
+        tablicaFile<<"USUWANIE: ";
         for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
         tablicaFile<<endl<<endl;
     }
@@ -60,9 +58,10 @@ void kopiecTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
         srednia=0;
         for(int i=0;i<iloscOperacji;i++){
             for(int k=0;k<wielkoscZestawu;k++) kopie.dodaj(rand()%1000+1);
-            int indeks = kopie.table[rand()%(wielkoscZestawu/2+(wielkoscZestawu/2 -50))];
+            kopie.usunKorzen();
+            kopie.dodaj(kopie.table[0]-kopie.table[0]/2);
             t1 = chrono::high_resolution_clock::now();
-            //kopie.wyszukaj(indeks); //jakis blad??
+            kopie.wyszukaj(kopie.table[0]-kopie.table[0]/2); //jakis blad??
             t2 = chrono::high_resolution_clock::now();
             chrono::duration<double> time_span = std::chrono::duration_cast<chrono::duration<double>>(t2 - t1);
             tablicaCzasow[i] = std::chrono::duration<double>(time_span).count();
@@ -72,9 +71,10 @@ void kopiecTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
         tablicaSrednich1[j] = srednia/1000;
     }
     if(tablicaFile.is_open()){
-        tablicaFile<<"WYNIKI WYSZUKIWANIA Z DOWOLNEGO MIEJSCA W POLOWIE ZESTAWU: ";
+        tablicaFile<<"Wyszukiwanie: ";
         for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
         tablicaFile<<endl;
         tablicaFile<<endl<<endl;
     }
+    cout<<"TESTY NA KOPCU ZAKONCZONE SUKCESEM"<<endl;
 }

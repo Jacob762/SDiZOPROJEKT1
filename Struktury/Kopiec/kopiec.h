@@ -34,6 +34,8 @@ public:
     void menu();
 
     int wyszukaj(int number);
+
+    int szukaj(int indeks,int number);
 };
 
 

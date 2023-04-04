@@ -72,6 +72,7 @@ namespace std {
                     cin>>n;
                     liczba = wyszukaj(n);
                     if(liczba!=-42) cout<<liczba<<endl;
+                    else cout<<"nie ma takiej liczby"<<endl;
                     break;
                 case 3:
                     delete [] table;
@@ -109,6 +110,10 @@ namespace std {
         relocate();
     }
     void tablica::dodajNaDowolneMiejsce(int liczba, int index) {
+        if(index<0 || index>=rozmiar) {
+            cout<<"Nie ma takiego indeksu"<<endl;
+            return;
+        }
         temp = new int[++rozmiar];
         temp[index] = liczba;
         for(int i=0;i<index;i++) temp[i] = table[i];
@@ -116,7 +121,10 @@ namespace std {
         relocate();
     }
     void tablica::usunZKonca() {
-        if(rozmiar==0) return;
+        if(rozmiar==0) {
+            cout<<"Lista pusta"<<endl;
+            return;
+        }
         temp = new int[--rozmiar];
         for(int i=0;i<rozmiar;i++) temp[i] = table[i];
         relocate();
@@ -126,14 +134,23 @@ namespace std {
         table = temp;
     }
     void tablica::usunZPoczatku() {
-        if(rozmiar==0) return;
+        if(rozmiar==0) {
+            cout<<"Lista pusta"<<endl;
+            return;
+        }
         temp = new int[--rozmiar];
         for(int i=0;i<rozmiar;i++) temp[i] = table[i+1];
         relocate();
     }
     void tablica::usunZDowolnegoMiejsca(int index) {
-        if(rozmiar==0) return;
-        if(index>=rozmiar) return;
+        if(rozmiar==0) {
+            cout<<"Lista pusta"<<endl;
+            return;
+        }
+        if(index<0 || index>=rozmiar) {
+            cout<<"Nie ma takiego indeksu"<<endl;
+            return;
+        }
         temp = new int[--rozmiar];
         for(int i=0;i<index;i++) temp[i] = table[i];
         for(int i=index;i<rozmiar;i++) temp[i] = table[i+1];

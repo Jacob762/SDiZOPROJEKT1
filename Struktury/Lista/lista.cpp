@@ -45,7 +45,10 @@ void lista::dodajNaPoczatek(listaElement * element){
 }
 
 void lista::dodajWDowolnymMiejscu(int index,listaElement * element){
-    if(index<0||index>=rozmiar&&index!=0) return;
+    if(index<0||index>=rozmiar&&index!=0) {
+        cout<<"Nie ma takiego indeksu"<<endl;
+        return;
+    }
     if (!head) {
         head = element;
         tail = element;
@@ -70,7 +73,10 @@ void lista::dodajWDowolnymMiejscu(int index,listaElement * element){
 }
 
 void lista::pokaz() {
-    if(isEmpty()) return;
+    if(isEmpty()) {
+        cout<<"Lista pusta"<<endl;
+        return;
+    }
     listaElement* temp;
     temp = head;
     for(int i=0;i<rozmiar;i++){
@@ -81,22 +87,25 @@ void lista::pokaz() {
     delete temp;
 }
 
-listaElement* lista::wyszukajElement(float index) {
-    listaElement* temp;
-    float m = mediana();
-    if(index<m) {
-        temp = head;
-        for(int i=0;i<index;i++){
-            temp = temp -> nextEl;
-        }
+listaElement* lista::wyszukajElement(int liczba) {
+    listaElement* temp = head;
+    while(temp!=tail) {
+        if(temp->data == liczba) return temp;
+        temp = temp->nextEl;
     }
-    else {
-        temp = tail;
-        for(int i=0;i<index;i++){
-            temp = temp -> prevEl;
-        }
+    return NULL;
+}
+
+int lista::wyszukajElementIndex(int liczba) {
+    listaElement* temp = head;
+    int indeks =  0;
+    while(temp!=tail) {
+        if(temp->data == liczba) return indeks;
+        temp = temp->nextEl;
+        indeks++;
     }
-    return temp;
+    if(temp->data==liczba) return indeks;
+    return NULL;
 }
 bool lista::isEmpty() {
     if(!head) return true;
@@ -108,28 +117,45 @@ bool lista::isEven(){
     else return true;
 }
 
-float lista::mediana(){
-    if(isEven()) return (((double)rozmiar)/2-0.5)+(((double)rozmiar)/2+0.5)/2;
-    else return ((double)rozmiar)/2+0.5;
-}
-
 void lista::usunZPoczatku(){
-    if(!safetyFirst()) return;
+    if(rozmiar==0){
+        cout<<"Lista pusta"<<endl;
+        return;
+    }
+    if(!safetyFirst()) {
+        return;
+    }
     head->nextEl->prevEl = NULL;
     head = head->nextEl;
     rozmiar--;
 }
 
 void lista::usunZKonca(){
-    if(!safetyFirst()) return;
+    if(rozmiar==0){
+        cout<<"Lista pusta"<<endl;
+        return;
+    }
+    if(!safetyFirst()) {
+        return;
+    }
     tail->prevEl->nextEl = NULL;
     tail = tail->prevEl;
     rozmiar--;
 }
 
 void lista::usunZDowolnegoMiejsca(int index){
-    if(!safetyFirst()) return;
-    if(index<0||index>=rozmiar&&index!=0) return;
+    if(rozmiar==0){
+        cout<<"Lista pusta"<<endl;
+        return;
+    }
+    if(!safetyFirst()) {
+        cout<<"Lista nie istnieje"<<endl;
+        return;
+    }
+    if(index<0||index>=rozmiar&&index!=0) {
+        cout<<"Nie ma takiego indeksu"<<endl;
+        return;
+    }
     else if(index==0){ //head
         usunZPoczatku();
     }
@@ -138,6 +164,7 @@ void lista::usunZDowolnegoMiejsca(int index){
     }
     else {
         listaElement* temp = wyszukajElement(index);
+        if(temp==NULL) return;
         temp->prevEl->nextEl = temp->nextEl;
         temp->nextEl->prevEl = temp->prevEl;
         delete temp;
@@ -156,25 +183,20 @@ bool lista::safetyFirst(){
     else return true;
 }
 void lista::wczytaj(string nazwa) {
-    FILE* strumien;
-    char tab[nazwa.length()];
-    for(int i=0;i<nazwa.length();i++) tab[i] = nazwa.at(i);
-    strumien = fopen(tab, "rt");
-    if(strumien==NULL || head!=NULL){
+    fstream file (nazwa,std::ios_base::in);
+    if (!file.is_open()) {
         cout<<"ERROR"<<endl;
         return;
     }
-    while (!feof(strumien)){
-        int number;
-        fscanf(strumien,"%d",&number);
+    int number;
+    while (file >> number){
         dodajNaKoniec(new listaElement(number));
     }
-    fclose(strumien);
 }
 
 void lista::zapisz(string nazwa) {
     if (!safetyFirst()){
-        cout<<"Brak utworzonej tablicy."<<endl;
+        cout<<"Brak utworzonej listy."<<endl;
         return;
     }
     ofstream file (nazwa);
@@ -249,9 +271,11 @@ void lista::menu() {
                 break;
             case 3:
                 cin.sync(); cin.clear();
-                cout<<"Podaj indeks"<<endl;
-                cin>>n;
-                wyszukajElement(n);
+                cout<<"Podaj liczbe"<<endl;
+                cin>>liczba;
+                n = wyszukajElementIndex(liczba);
+                if(n!=NULL) cout<<n<<endl;
+                else cout<<"Nie ma takiej liczby"<<endl;
                 break;
             case 9:
                 for(int i=0;i<rozmiar;i++) usunZKonca();

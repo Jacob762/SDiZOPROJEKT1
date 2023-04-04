@@ -25,8 +25,7 @@ public:
     void dodajNaPoczatek(listaElement *element);
     bool isEmpty();
     bool isEven();
-    float mediana();
-    listaElement* wyszukajElement(float index);
+    listaElement* wyszukajElement(int liczba);
     void dodajWDowolnymMiejscu(int index,listaElement * element);
     void usunZPoczatku();
     void usunZKonca();
@@ -37,6 +36,8 @@ public:
     void zapisz(string nazwa);
 
     void menu();
+
+    int wyszukajElementIndex(int liczba);
 };
 
 

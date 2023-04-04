@@ -341,12 +341,6 @@ RBTree::RBTNode* RBTree::wskazBrata(RBTree::RBTNode* node){
     return brat;
 }
 
-void RBTree::usunDrzewo(RBTree::RBTNode* root){
-    if(root==&straznik) return;
-    usunDrzewo(root->left);
-    usun(root);
-    usunDrzewo(root->right);
-}
 
 void RBTree::menu(){
     int n;
@@ -383,7 +377,7 @@ void RBTree::menu(){
                 cin.sync(); cin.clear();
                 cout<<"Podaj liczbe"<<endl;
                 cin>>liczba;
-                wyszukaj(liczba);
+                if(wyszukaj(liczba)) cout<<"Liczba istnieje w drzewie"<<endl;
                 break;
             case 9:
                 while(root!=&straznik) usun(root);

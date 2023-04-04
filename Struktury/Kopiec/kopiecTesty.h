@@ -11,9 +11,8 @@
 
 class kopiecTesty {
 public:
-    kopiecTesty(int wielkoscZestawu,int iloscOperacji,int iloscWynikow);
+    kopiecTesty();
     kopiec kopie;
-private:
     void test(int wielkoscZestawu, int iloscOperacji, int iloscWynikow);
 };
 

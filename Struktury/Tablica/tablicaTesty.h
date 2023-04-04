@@ -8,7 +8,7 @@
 
 class tablicaTesty {
 public:
-    tablicaTesty(int wielkoscZestawu,int iloscOperacji,int iloscWynikow);
+    tablicaTesty();
     std::tablica tablicaTest;
     void test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow);
 };

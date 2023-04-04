@@ -7,10 +7,8 @@
 
 using namespace std;
 
-listaTesty::listaTesty(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
+listaTesty::listaTesty() {
     list = lista();
-    test(wielkoscZestawu,iloscOperacji,iloscWynikow);
-    cout<<"TESTY NA LISCIE ZAKONCZONE SUKCESEM"<<endl;
 }
 
 void listaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
@@ -51,10 +49,10 @@ void listaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
     }
     if(listaFile.is_open()){
         listaFile<<"WLASCIWOSCI: WIELKOSC ZESTAWU: "<< wielkoscZestawu<<" ILOSC OPERACJI: "<<iloscOperacji<<endl;
-        listaFile<<"WYNIKI DODAWANIA NA KONIEC: ";
+        listaFile<<"DODAWANIE_NA_KONIEC: ";
         for(int i=0;i<iloscWynikow;i++) listaFile<<tablicaSrednich1[i]<<" ";
         listaFile<<endl;
-        listaFile<<"WYNIKI USUWANIA Z KONCA: ";
+        listaFile<<"USUWANIE_Z_KONCA: ";
         for(int i=0;i<iloscWynikow;i++) listaFile<<tablicaSrednich1[i]<<" ";
         listaFile<<endl;
     }
@@ -84,10 +82,10 @@ void listaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
         tablicaSrednich2[j] = srednia2/1000;
     }
     if(listaFile.is_open()){
-        listaFile<<"WYNIKI DODAWANIA NA POCZATEK: ";
+        listaFile<<"DODAWANIE_NA_POCZATEK: ";
         for(int i=0;i<iloscWynikow;i++) listaFile<<tablicaSrednich1[i]<<" ";
         listaFile<<endl;
-        listaFile<<"WYNIKI USUWANIA Z POCZATKU: ";
+        listaFile<<"USUWANIE_Z_POCZATKU: ";
         for(int i=0;i<iloscWynikow;i++) listaFile<<tablicaSrednich1[i]<<" ";
         listaFile<<endl;
     }
@@ -98,7 +96,7 @@ void listaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
         for(int i=0;i<iloscOperacji;i++){
             for(int k=0;k<wielkoscZestawu;k++) list.dodajNaKoniec(new listaElement(rand()%1000+1));
             int numb = rand()%1000+1;
-            int indeks = rand()%(wielkoscZestawu/2+(wielkoscZestawu/2 -50));
+            int indeks = numb;
             listaElement* element = new listaElement(numb);
             t1 = chrono::high_resolution_clock::now();
             list.dodajWDowolnymMiejscu(indeks,element);
@@ -107,7 +105,8 @@ void listaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
             tablicaCzasow[i] = std::chrono::duration<double>(time_span).count();
             srednia+=tablicaCzasow[i];
             t1 = chrono::high_resolution_clock::now();
-            list.usunZDowolnegoMiejsca(indeks);
+            cout<<indeks<<endl;
+            list.usunZDowolnegoMiejsca(indeks); //psuje sie bo funkcja zajmuje sie teraz liczbami a nie indeksaMi
             t2 = chrono::high_resolution_clock::now();
             time_span = std::chrono::duration_cast<chrono::duration<double>>(t2 - t1);
             tablicaCzasow1[i] = std::chrono::duration<double>(time_span).count();
@@ -118,10 +117,10 @@ void listaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
         tablicaSrednich2[j] = srednia2/1000;
     }
     if(listaFile.is_open()){
-        listaFile<<"WYNIKI DODAWANIA NA DOWOLNE MIEJSCE: ";
+        listaFile<<"DODAWANIE_NA_DOWOLNE_MIEJSCE: ";
         for(int i=0;i<iloscWynikow;i++) listaFile<<tablicaSrednich1[i]<<" ";
         listaFile<<endl;
-        listaFile<<"WYNIKI USUWANIA Z DOWOLNEGO MIEJSCA: ";
+        listaFile<<"USUWANIE_Z_DOWOLNEGO_MIEJSCA: ";
         for(int i=0;i<iloscWynikow;i++) listaFile<<tablicaSrednich1[i]<<" ";
         listaFile<<endl;
     }
@@ -129,9 +128,10 @@ void listaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
         srednia=0;
         for(int i=0;i<iloscOperacji;i++){
             for(int k=0;k<wielkoscZestawu;k++) list.dodajNaKoniec(new listaElement(rand()%1000+1));
-            int indeks = rand()%(wielkoscZestawu/2+(wielkoscZestawu/2 -50));
+            list.usunZKonca();
+            list.dodajWDowolnymMiejscu(wielkoscZestawu/2,new listaElement(1002));
             t1 = chrono::high_resolution_clock::now();
-            list.wyszukajElement(indeks);
+            list.wyszukajElement(1002);
             t2 = chrono::high_resolution_clock::now();
             chrono::duration<double> time_span = std::chrono::duration_cast<chrono::duration<double>>(t2 - t1);
             tablicaCzasow[i] = std::chrono::duration<double>(time_span).count();
@@ -141,9 +141,10 @@ void listaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
         tablicaSrednich1[j] = srednia/1000;
     }
     if(listaFile.is_open()){
-        listaFile<<"WYNIKI WYSZUKIWANIA Z DOWOLNEGO MIEJSCA W POLOWIE ZESTAWU: ";
+        listaFile<<"Wyszukiwanie: ";
         for(int i=0;i<iloscWynikow;i++) listaFile<<tablicaSrednich1[i]<<" ";
         listaFile<<endl;
         listaFile<<endl<<endl;
     }
+    cout<<"TESTY NA LISCIE ZAKONCZONE SUKCESEM"<<endl;
 }

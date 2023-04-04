@@ -4,13 +4,12 @@
 
 #include <fstream>
 #include "tablicaTesty.h"
+#include <cmath>
 
 using namespace std;
 
-    tablicaTesty::tablicaTesty(int wielkoscZestawu,int iloscOperacji,int iloscWynikow) {
+    tablicaTesty::tablicaTesty() {
     tablicaTest = tablica();
-        test(wielkoscZestawu,iloscOperacji,iloscWynikow);
-        cout<<"TESTY NA TABLICY ZAKONCZONE SUKCESEM"<<endl;
     }
 
 void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
@@ -50,11 +49,11 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
     }
     if(tablicaFile.is_open()){
         tablicaFile<<"WLASCIWOSCI: WIELKOSC ZESTAWU: "<< wielkoscZestawu<<" ILOSC OPERACJI: "<<iloscOperacji<<endl;
-        tablicaFile<<"WYNIKI DODAWANIA NA KONIEC: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<"DODAWANIE_NA_KONIEC: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
-        tablicaFile<<"WYNIKI USUWANIA Z KONCA: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<"USUWANIE_Z_KONCA: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
     }
     //badanie dodawania na poczatrke i odjemwonai az koncu
@@ -82,11 +81,11 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
         tablicaSrednich2[j] = srednia2/1000;
     }
     if(tablicaFile.is_open()){
-        tablicaFile<<"WYNIKI DODAWANIA NA POCZATEK: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<"DODAWANIE_NA_POCZATEK: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
-        tablicaFile<<"WYNIKI USUWANIA Z POCZATKU: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<"USUWANIE_Z_POCZATKU: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
     }
     //badanie dodawania i odejmowania z dowolnego miejsca w polowie
@@ -115,21 +114,20 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
         tablicaSrednich2[j] = srednia2/1000;
     }
     if(tablicaFile.is_open()){
-        tablicaFile<<"WYNIKI DODAWANIA NA DOWOLNE MIEJSCE: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<"DODAWANIE_NA_DOWOLNE_MIEJSCE: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
-        tablicaFile<<"WYNIKI USUWANIA Z DOWOLNEGO MIEJSCA: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<"USUWANIE_Z_DOWOLNEGO_MIEJSCA: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
-        tablicaFile<<endl<<endl;
     }
     for(int j=0;j<iloscWynikow;j++){
         srednia=0;
         for(int i=0;i<iloscOperacji;i++){
             for(int k=0;k<wielkoscZestawu;k++) tablicaTest.dodajNaKoniec(rand()%1000+1);
-            int indeks = tablicaTest.table[rand()%(wielkoscZestawu/2+(wielkoscZestawu/2 -50))];
+            tablicaTest.table[wielkoscZestawu/2] = 1002;
             t1 = chrono::high_resolution_clock::now();
-            tablicaTest.wyszukaj(indeks);
+            tablicaTest.wyszukaj(1002);
             t2 = chrono::high_resolution_clock::now();
             chrono::duration<double> time_span = std::chrono::duration_cast<chrono::duration<double>>(t2 - t1);
             tablicaCzasow[i] = std::chrono::duration<double>(time_span).count();
@@ -139,9 +137,10 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
         tablicaSrednich1[j] = srednia/1000;
     }
     if(tablicaFile.is_open()){
-        tablicaFile<<"WYNIKI WYSZUKIWANIA Z DOWOLNEGO MIEJSCA W POLOWIE ZESTAWU: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]<<" ";
+        tablicaFile<<"Wyszukiwanie: ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
         tablicaFile<<endl<<endl;
     }
+    cout<<"TESTY NA TABLICY ZAKONCZONE SUKCESEM"<<endl;
 }

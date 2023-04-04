@@ -9,12 +9,13 @@
 #include <iostream>
 
 class listaTesty {
-    lista list;
 private:
-    void test(int wielkoscZestawu, int iloscOperacji, int iloscWynikow);
+    lista list;
 
 public:
-    listaTesty(int wielkoscZestawu,int iloscOperacji,int iloscWynikow);
+    listaTesty();
+
+    void test(int wielkoscZestawu, int iloscOperacji, int iloscWynikow);
 };
 
 
