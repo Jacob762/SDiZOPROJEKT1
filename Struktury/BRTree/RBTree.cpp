@@ -109,6 +109,7 @@ RBTree::RBTree() {
         } else if(node->data==liczba)return node;
         else break;
     }
+        if(node->data != liczba) return NULL;
     return node;
 }
 
@@ -343,6 +344,7 @@ RBTree::RBTNode* RBTree::wskazBrata(RBTree::RBTNode* node){
 
 
 void RBTree::menu(){
+    RBTNode* temp;
     int n;
     int liczba;
     string name;
@@ -371,13 +373,16 @@ void RBTree::menu(){
                 cin.sync(); cin.clear();
                 cout<<"Podaj liczbe"<<endl;
                 cin>>liczba;
-                usun(wyszukaj(liczba));
+                temp = wyszukaj(liczba);
+                if(temp!=NULL) usun(temp);
+                else cout<<"Nie ma takiej liczby"<<endl;
                 break;
             case 3:
                 cin.sync(); cin.clear();
                 cout<<"Podaj liczbe"<<endl;
                 cin>>liczba;
-                if(wyszukaj(liczba)) cout<<"Liczba istnieje w drzewie"<<endl;
+                if(wyszukaj(liczba)!=NULL) cout<<"Liczba istnieje w drzewie"<<endl;
+                else cout<<"Liczba nie istnieje"<<endl;
                 break;
             case 9:
                 while(root!=&straznik) usun(root);

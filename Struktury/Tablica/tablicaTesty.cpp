@@ -44,8 +44,8 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
             srednia2+=tablicaCzasow1[i];
             for(int k=0;k<wielkoscZestawu;k++) tablicaTest.usunZKonca();
         }
-        tablicaSrednich1[j] = srednia/1000;
-        tablicaSrednich2[j] = srednia2/1000;
+        tablicaSrednich1[j] = srednia/iloscOperacji;
+        tablicaSrednich2[j] = srednia2/iloscOperacji;
     }
     if(tablicaFile.is_open()){
         tablicaFile<<"WLASCIWOSCI: WIELKOSC ZESTAWU: "<< wielkoscZestawu<<" ILOSC OPERACJI: "<<iloscOperacji<<endl;
@@ -53,7 +53,7 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
         for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
         tablicaFile<<"USUWANIE_Z_KONCA: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich2[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
     }
     //badanie dodawania na poczatrke i odjemwonai az koncu
@@ -77,15 +77,15 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
             srednia2+=tablicaCzasow1[i];
             for(int k=0;k<wielkoscZestawu;k++) tablicaTest.usunZKonca();
         }
-        tablicaSrednich1[j] = srednia/1000;
-        tablicaSrednich2[j] = srednia2/1000;
+        tablicaSrednich1[j] = srednia/iloscOperacji;
+        tablicaSrednich2[j] = srednia2/iloscOperacji;
     }
     if(tablicaFile.is_open()){
         tablicaFile<<"DODAWANIE_NA_POCZATEK: ";
         for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
         tablicaFile<<"USUWANIE_Z_POCZATKU: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich2[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
     }
     //badanie dodawania i odejmowania z dowolnego miejsca w polowie
@@ -110,15 +110,15 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
             srednia2+=tablicaCzasow1[i];
             for(int k=0;k<wielkoscZestawu;k++) tablicaTest.usunZKonca();
         }
-        tablicaSrednich1[j] = srednia/1000;
-        tablicaSrednich2[j] = srednia2/1000;
+        tablicaSrednich1[j] = srednia/iloscOperacji;
+        tablicaSrednich2[j] = srednia2/iloscOperacji;
     }
     if(tablicaFile.is_open()){
         tablicaFile<<"DODAWANIE_NA_DOWOLNE_MIEJSCE: ";
         for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
         tablicaFile<<"USUWANIE_Z_DOWOLNEGO_MIEJSCA: ";
-        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich1[i]*pow(10,9)<<" ";
+        for(int i=0;i<iloscWynikow;i++) tablicaFile<<tablicaSrednich2[i]*pow(10,9)<<" ";
         tablicaFile<<endl;
     }
     for(int j=0;j<iloscWynikow;j++){
@@ -134,7 +134,7 @@ void tablicaTesty::test(int wielkoscZestawu,int iloscOperacji,int iloscWynikow){
             srednia+=tablicaCzasow[i];
             for(int k=0;k<wielkoscZestawu;k++) tablicaTest.usunZKonca();
         }
-        tablicaSrednich1[j] = srednia/1000;
+        tablicaSrednich1[j] = srednia/iloscOperacji;
     }
     if(tablicaFile.is_open()){
         tablicaFile<<"Wyszukiwanie: ";

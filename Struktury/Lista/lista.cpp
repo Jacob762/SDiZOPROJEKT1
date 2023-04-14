@@ -89,8 +89,8 @@ void lista::pokaz() {
 
 listaElement* lista::wyszukajElement(int liczba) {
     listaElement* temp = head;
-    while(temp!=tail) {
-        if(temp->data == liczba) return temp;
+    for(int i=0;i<liczba;i++) {
+        if(i==liczba-1) return temp;
         temp = temp->nextEl;
     }
     return NULL;
