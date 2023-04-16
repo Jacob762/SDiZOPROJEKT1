@@ -6,7 +6,6 @@
 #include "Struktury/Tablica/tablicaTesty.h"
 #include "Struktury/Lista/listaTesty.h"
 #include "Struktury/Kopiec/kopiecTesty.h"
-#include <cstdlib>
 #include "Struktury/BRTree/RBTreeTesty.h"
 using namespace std;
 
@@ -14,24 +13,7 @@ void testyMenu();
 void menu();
 
 int main() {
-    tablicaTesty tabT = tablicaTesty();
-    listaTesty list = listaTesty();
-    kopiecTesty kopiec = kopiecTesty();
-    RBTreeTesty tree = RBTreeTesty();
-    cout<<"START"<<endl;
-    //tabT.test(30000,300,15);
-    cout<<"TEST TABLIC ZKONCZONE"<<endl;
-    //list.test(30000,300,15);
-    cout<<"TEST LISTY ZAKONCZONY"<<endl;
-    kopiec.test(10000,300,15);
-    kopiec.test(20000,300,15);
-    kopiec.test(30000,300,15);
-    kopiec.test(50000,300,15);
-    cout<<"TEST KOPCA ZAKONCZONY"<<endl;
-    //tree.rbtTesty(30000,300,15);
-    cout<<"TESTY ZAKONCZONE"<<endl;
-    //testyMenu();
-    //menu();
+    testyMenu();
 }
 
 void testyMenu(){
@@ -86,7 +68,7 @@ void menu(){
                 tab.menu();
                 break;
             case 2:
-                //list.menu();
+                listaa.menu();
                 break;
             case 3:
                 kopiec1.menu();
