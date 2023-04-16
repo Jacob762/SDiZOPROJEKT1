@@ -204,7 +204,8 @@ int kopiec::wyszukaj(int number) {
     }
     int i=0;
     if(table[i]==number) return i;
-    return szukaj(i, number);
+    for(int i=0;i<rozmiar;i++) if(table[i]==number) return i;
+    //return szukaj(i, number);
 }
 
 int kopiec::szukaj(int indeks, int number){

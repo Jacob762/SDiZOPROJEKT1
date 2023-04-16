@@ -97,15 +97,21 @@ listaElement* lista::wyszukajElement(int liczba) {
 }
 
 int lista::wyszukajElementIndex(int liczba) {
+    if(isEmpty()){
+        cout<<"Lista pusta"<<endl;
+        return -8;
+    }
     listaElement* temp = head;
     int indeks =  0;
+    cout<<temp->data<<endl;
     while(temp!=tail) {
         if(temp->data == liczba) return indeks;
         temp = temp->nextEl;
         indeks++;
     }
+    cout<<temp->data<<endl;
     if(temp->data==liczba) return indeks;
-    return NULL;
+    return -9;
 }
 bool lista::isEmpty() {
     if(!head) return true;
@@ -274,8 +280,8 @@ void lista::menu() {
                 cout<<"Podaj liczbe"<<endl;
                 cin>>liczba;
                 n = wyszukajElementIndex(liczba);
-                if(n!=NULL) cout<<n<<endl;
-                else cout<<"Nie ma takiej liczby"<<endl;
+                if(n!=-9) cout<<n<<endl;
+                else cout<<"Brak takiej liczby"<<endl;
                 break;
             case 9:
                 for(int i=0;i<rozmiar;i++) usunZKonca();
