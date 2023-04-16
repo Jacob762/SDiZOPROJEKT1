@@ -9,44 +9,11 @@
 #include "Struktury/BRTree/RBTreeTesty.h"
 using namespace std;
 
-void testyMenu();
+
 void menu();
 
 int main() {
-    testyMenu();
-}
-
-void testyMenu(){
-    tablicaTesty tab = tablicaTesty();
-    listaTesty list = listaTesty();
-    kopiecTesty kopiec = kopiecTesty();
-    RBTreeTesty tree = RBTreeTesty();
-    for(;;){
-        cout<<"Wybierz strukture"<<endl;
-        cout<<"1. tablica dynamiczna"<<endl;
-        cout<<"2. lista dwukierunkowa"<<endl;
-        cout<<"3. kopiec"<<endl;
-        cout<<"4. drzewo czerwono-czarne"<<endl;
-        cout<<"5. Wyjdz"<<endl;
-        int n;
-        cin>>n;
-        switch (n) {
-            case 1:
-                tab.test(1000,200,5);
-                break;
-            case 2:
-                list.test(1000,200,5);
-                break;
-            case 3:
-                kopiec.test(1000,200,5);
-                break;
-            case 4:
-                tree.rbtTesty(1000,200,5);
-                break;
-            case 5:
-                exit(2138);
-        }
-    }
+    menu();
 }
 
 void menu(){
