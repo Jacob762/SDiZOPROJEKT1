@@ -217,7 +217,7 @@ void RBTree::printData(RBTree::RBTNode* rote){
     printData(rote->left);
 }
 
-bool RBTree::usun(RBTree::RBTNode* node){ //usuwanie roota nie dziala w pelni poprawnie, buguje sie przy delete, ciagle usuwanie roota nie dziala, nawet z wylaczonym deletem
+bool RBTree::usun(RBTree::RBTNode* node){
     bool strona = NULL;
     bool xd = false;
     bool problem = false;
@@ -225,7 +225,7 @@ bool RBTree::usun(RBTree::RBTNode* node){ //usuwanie roota nie dziala w pelni po
     RBTNode *syn = nullptr,*ojciec;
     if(node->left==&straznik) {//przypadek lewy syn nie istnieje
         syn = node->right;
-        if(syn==&straznik){ //generuje blad przy okreslaniu prawej lub lewej strony, usuniecie kompletnie burzy program
+        if(syn==&straznik){
             if(node==node->up->left) {
                 node->up->left = &straznik;
                 strona = false;
@@ -265,7 +265,6 @@ bool RBTree::usun(RBTree::RBTNode* node){ //usuwanie roota nie dziala w pelni po
                 brat->color = 'R';
                 if(node->up->color=='R' && brat!=&straznik){
                     node->up->color = 'B';
-                    //dodatkowy = false;
                     break;
                 }
                 node = node->up;
